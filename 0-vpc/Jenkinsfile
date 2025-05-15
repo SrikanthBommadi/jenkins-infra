@@ -4,6 +4,7 @@ pipeline {
     }
     options {
         timeout(time: 30, unit: 'MINUTES' ) //this for time out after soem time. 
+        ansicolor('xterm')
         disableConcurrentBuilds()           // 1 build is running if you press 2nd build it will wait until 1st build done
     }
     parameters {
@@ -12,9 +13,13 @@ pipeline {
     stages {
          stage('INIT') {
             steps {
-                echo 'Building the application...'
-                sh 'cd 0-vpc'
-                sh 'terraform init -reconfigure'
+                //echo 'Building the application...'
+                //sh 'cd 0-vpc'
+               // sh 'terraform init -reconfigure'
+                sh """
+                 cd 0-vpc
+                 terraform init -reconfigure
+                """
             }
         }
         stage('plan') {
