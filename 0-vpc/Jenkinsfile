@@ -4,7 +4,7 @@ pipeline {
     }
     options {
         timeout(time: 30, unit: 'MINUTES' ) //this for time out after soem time. 
-        ansicolor('xterm')
+        ansiColor('xterm')
         disableConcurrentBuilds()           // 1 build is running if you press 2nd build it will wait until 1st build done
     }
     parameters {
