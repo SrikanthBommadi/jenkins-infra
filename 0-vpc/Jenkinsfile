@@ -1,41 +1,52 @@
 pipeline {
-    agent{
-        label 'jenkins-agent'
+    agent { label 'jenkins-agent' }
+    environment { 
+        PROJECT = 'EXPENSE'
+        COMPONENT = 'BACKEND' 
+        DEPLOY_TO = "production"
     }
     options {
         timeout(time: 30, unit: 'MINUTES' ) //this for time out after soem time. 
-        ansiColor('xterm')
+        ansiColor('xterm')                  // this is for output colors
         disableConcurrentBuilds()           // 1 build is running if you press 2nd build it will wait until 1st build done
     }
     parameters {
         choice(name: 'ACTION', choices: ['apply', 'destroy', 'plan'], description: 'Pick something')
     }
     stages {
-         stage('INIT') {
+        stage('Init') {
             steps {
-                //echo 'Building the application...'
-                //sh 'cd 0-vpc'
-               // sh 'terraform init -reconfigure'
-                sh """
-                 cd 0-vpc
-                 terraform init -reconfigure
-                """
-            }
-        }
-        stage('plan') {
-            steps {
-                withAWS(region: 'us-east-1',credentials: 'aws')
-                sh 'terraform plan -out=tfplan'
+               script{
+                withAWS(region: 'us-east-1', credentials: 'aws') {
+                    sh """
+                        cd 00-vpc
+                        terraform init -reconfigure
+                        terraform plan
+                    """
+                }
+                 
+               }
             }
         }
         stage('Apply') {
-            steps {
-                echo 'Deploying the application...'
-                sh 'terraform apply'
+            input {
+                message "Should we continue?"
+                ok "Yes, we should."
             }
-        }      
+            steps {
+               script{
+                withAWS(region: 'us-east-1', credentials: 'aws') {
+                    sh """
+                        cd 00-vpc
+                        terraform apply -auto-approve
+                    """
+                }
+                 
+               }
+            }
+        }
     }
-    post {
+     post {
         always {
             echo " always show this "
             deleteDir() //it will delete the data of build which is in workspace 
