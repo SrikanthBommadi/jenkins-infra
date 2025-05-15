@@ -1,5 +1,5 @@
 pipeline {
-    agent 'srikanth'
+    agent 'jenkins-agent'
 
     environment {
     
