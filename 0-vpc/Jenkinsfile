@@ -30,7 +30,7 @@ pipeline {
         }
         stage('Apply-delete') {
             input {
-                message "Should we continue to ${parms.ACTION}"
+                message "Should we continue to ${params.ACTION}"
                 ok "Yes, we should."
             }
             steps {
@@ -41,7 +41,7 @@ pipeline {
                         if [ ${params.ACTION} == 'apply' ]
                         then
                             terraform apply -auto-approve
-                        elif [ ${parms.ACTION} == 'destroy' ]
+                        elif [ ${params.ACTION} == 'destroy' ]
                         then
                             terraform destroy -auto-approve
                         fi
