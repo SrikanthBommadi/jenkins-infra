@@ -28,9 +28,9 @@ pipeline {
                }
             }
         }
-        stage('Apply') {
+        stage('Apply-delete') {
             input {
-                message "Should we continue?"
+                message "Should we continue to ${parms.ACTION}"
                 ok "Yes, we should."
             }
             steps {
@@ -38,7 +38,13 @@ pipeline {
                 withAWS(region: 'us-east-1', credentials: 'aws') {
                     sh """
                         cd 0-vpc
-                        terraform apply -auto-approve
+                        if [ ${params.ACTION} == 'apply' ]
+                        then
+                            terraform apply -auto-approve
+                        elif [ ${parms.ACTION} == 'destroy' ]
+                        then
+                            terraform destroy -auto-approve
+                        fi
                     """
                 }
                  
