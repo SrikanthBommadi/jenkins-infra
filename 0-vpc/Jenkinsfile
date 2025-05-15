@@ -42,5 +42,6 @@ pipeline {
         }
         failure {
             echo " when it failure "  // when it faliure only
-        }      
+        }
+    }
 }
