@@ -1,0 +1,47 @@
+pipeline {
+    agent 'srikanth'
+
+    environment {
+    
+    }
+     options {
+        timeout(time: 30, unit: 'MINUTES' ) //this for time out after soem time. 
+        disableConcurrentBuilds()           // 1 build is running if you press 2nd build it will wait until 1st build done
+    }
+    parameters {
+        choice(name: 'ACTION', choices: ['apply', 'destroy', 'plan'], description: 'Pick something')
+    }
+    stages {
+         stage('INIT') {
+            steps {
+                echo 'Building the application...'
+                sh 'cd 0-vpc'
+                sh 'terraform init -reconfigure'
+            }
+        }
+        stage('plan') {
+            steps {
+                withAWS(region: 'us-east-1',credentials: 'aws')
+                sh 'terraform plan -out=tfplan'
+            }
+        }
+        stage('Apply') {
+            steps {
+                echo 'Deploying the application...'
+                sh 'terraform apply'
+            }
+        }      
+    }
+    post {
+        always {
+            echo " always show this "
+            deleteDir() //it will delete the data of build which is in workspace 
+        }
+        success {
+            echo " when it success " // when it succecs only
+        }
+        failure {
+            echo " when it failure "  // when it faliure only
+        }
+       
+}
