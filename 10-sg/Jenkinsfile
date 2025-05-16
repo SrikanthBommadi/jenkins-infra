@@ -19,7 +19,7 @@ pipeline {
                script{
                 withAWS(region: 'us-east-1', credentials: 'aws') {
                     sh """
-                        cd 0-vpc
+                        cd 10-sg
                         terraform init -reconfigure
                         terraform plan
                     """
@@ -37,7 +37,7 @@ pipeline {
                script{
                 withAWS(region: 'us-east-1', credentials: 'aws') {
                     sh """
-                        cd 0-vpc
+                        cd 10-sg
                         if [ ${params.ACTION} == 'apply' ]
                         then
                             terraform apply -auto-approve

@@ -1,20 +1,23 @@
-variable "sg_tags" {
-    default = {}
+variable "environment" {
+    default = "developer"
   
 }
-
 variable "project_name" {
     default = "cluster"
+  
 }
-
-variable "environment"{
-    default = "developer"
-}
-
 variable "common_tags" {
     default = {
         Project = "cluster"
         Environment = "developer"
         Terraform = "true"
     }
+}
+
+variable "domain_name" {
+    default = "srikanthaws.fun"
+}
+
+variable "zone_id" {
+    default = "Z070371924EXWCP8HF566"
 }

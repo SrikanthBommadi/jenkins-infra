@@ -1,16 +1,15 @@
-variable "sg_tags" {
-    default = {}
-  
-}
 
 variable "project_name" {
     default = "cluster"
+  
 }
-
-variable "environment"{
+variable "environment" {
     default = "developer"
+  
 }
-
+variable "sg_tags" {
+  default = {}
+}
 variable "common_tags" {
     default = {
         Project = "cluster"
