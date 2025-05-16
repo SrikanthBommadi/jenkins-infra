@@ -11,7 +11,7 @@ terraform {
     key    = "jenkins-vpc"
     region = "us-east-1"
     encrypt = true
-    use_lockfile = true
+    #use_lockfile = true
     #dynamodb_table = "srikanth.tf"   #only for onr table 
   }
 }
