@@ -51,12 +51,13 @@ pipeline {
                }
             }
         }
-    }
-    stage('trigger-sg'){
-        steps{
-            build job: '10-sg', parameters: [string(name:"ACTION", value: "apply")],wait = false //false when we dont want wait
+        stage('trigger-10-ag'){
+            steps {
+                 build job: '10-sg', parameters: [string(name: "ACTION", value: "apply")], wait: false
+            }
         }
     }
+   
      post {
         always {
             echo " always show this "
