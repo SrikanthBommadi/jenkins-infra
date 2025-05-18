@@ -1,21 +1,20 @@
 variable "project_name" {
-    default = "terraform"
+    default = "cluster"
 }
 
 variable "environment"{
     default = "developer"
 }
 
-variable "vpc_cidr" {
-    default = "10.0.0.0/16"
-}
-
 variable "common_tags" {
     default = {
-        Project = "terraform"
+        Project = "cluster"
         Environment = "developer"
         Terraform = "true"
     }
+}
+variable "vpc_cidr" {
+    default = "10.0.0.0/16"
 }
 
 variable "vpc_tags" {
