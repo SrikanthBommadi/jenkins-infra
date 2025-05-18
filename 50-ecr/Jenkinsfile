@@ -11,7 +11,7 @@ pipeline {
         disableConcurrentBuilds()           // 1 build is running if you press 2nd build it will wait until 1st build done
     }
     parameters {
-        choice(name: 'ACTION', choices: ['apply', 'destroy', 'plan'], description: 'Pick something')
+        choice(name: 'ACTION', choices: ['apply', 'destroy'], description: 'Pick something')
     }
     stages {
         stage('Init') {
@@ -37,7 +37,7 @@ pipeline {
                script{
                 withAWS(region: 'us-east-1', credentials: 'aws') {
                     sh """
-                        cd 0-vpc
+                        cd 50-ecr
                         if [ ${params.ACTION} == 'apply' ]
                         then
                             terraform apply -auto-approve
