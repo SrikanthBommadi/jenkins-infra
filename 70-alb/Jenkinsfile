@@ -52,12 +52,7 @@ pipeline {
             }
         }
     }
-    stage('trigger-sg'){
-        steps{
-            build job: '10-sg', parameters: [string(name:"ACTION", value: "apply")],wait = True //false when we dont want wait
-        }
-    }
-     post {
+    post {
         always {
             echo " always show this "
             deleteDir() //it will delete the data of build which is in workspace 
